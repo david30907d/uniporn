@@ -14,6 +14,7 @@
 ## 流程
 
 1. 首先要訓練一個是否有露的分類器，把Traiining Data做一次清洗，分出有穿衣服的正常照片（input data），和露奶露屁股露點的照片（之後複雜一點也許可以把露奶和露點分成兩類label data）
+    * [tensorflow版本](https://github.com/bakwc/PornDetector)
     * 色情分類器:[yahoo的](https://github.com/yahoo/open_nsfw)
     * 更細的色情分類器，真的能偵測6種性行為:[miles_deeps](https://github.com/ryanjay0/miles-deep)
         * blowjob_handjob
