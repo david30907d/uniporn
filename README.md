@@ -6,6 +6,8 @@
 
 # Training Data
 
+1. [清純女孩幾乎沒露的](http://huaban.com/explore/qingchunkeaimeinv/)
+2. [有露的 提姆](http://www.timliao.com/bbs/forumdisplay.php?fid=18) [ptt表特](https://www.ptt.cc/bbs/Beauty/index.html)
 1. [珍尼佛勞倫司等女星裸照](https://www.celebjihad.com/category/jennifer-lawrence/) [西洋女星](https://dark.getez.info/158751) [大補貼](http://tw.dufeed.com/article/content_136492.html?is_adult=1) [載點2](https://thefappening.wiki/) [真正的載點](https://kutlime.wordpress.com/fappening-celebrity-photo-foto-download/)
 2. [正妹圖 不能是女優](https://www.jkforum.net/forum.php?gid=573)
 3. 不能是女優的理由是因為背景都有屌、男生等圖片雜訊，一開始先用最乾淨的圖片，只有一位女生（兩位女生也不行，有男優有屌都不要）
