@@ -1,4 +1,5 @@
 build/
+huaban*
 
 # Project stuff
 entrance/settings_database.py
