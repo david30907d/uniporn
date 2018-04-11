@@ -35,12 +35,9 @@ class Command(BaseCommand):
 		return bytes([i for i in  bstr[:len(bstr)-len(result)]]+result).decode()
 	
 	def handle(self, *args, **options):
-		for i in tqdm.tqdm(range(2, 300)):
+		for i in tqdm.tqdm(range(2, 3000)):
 			dirName = 'huaban'+str(i)
 			subprocess.call(['mkdir', dirName])
-			if len(os.listdir(dirName)) == 20:
-				print('already crawl {}, continue crawling !!!'.format(dirName))
-				continue
 			code = 'jfqv3nj8'
 
 			while True:
@@ -53,6 +50,9 @@ class Command(BaseCommand):
 					
 			code = self.incrementStr(code)
 			for pic in pics:
+				if len(os.listdir(dirName)) >= 20:
+					print('already crawl {}, continue crawling !!!'.format(dirName))
+					break
 				filename = str(pic['file']['id'])+'.jpg'
 				pic_id = pic['file']['key']
 				if self.id_table.get(pic_id, 0) == 3:
@@ -72,4 +72,4 @@ class Command(BaseCommand):
 					f.write(imgBinary)
 				json.dump(self.id_table, open('id_table.json', 'w'))
 				time.sleep(30)
-		self.stdout.write(self.style.SUCCESS('build KCM success!!!'))
+		self.stdout.write(self.style.SUCCESS('finish crawling www.huaban.com !!!'))
