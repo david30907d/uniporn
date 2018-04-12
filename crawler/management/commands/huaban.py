@@ -45,10 +45,14 @@ class Command(BaseCommand):
 					pics = requests.get('http://huaban.com/explore/qingchunkeaimeinv/?{}&page={}&per_page=20&wfl=1'.format(code, i), headers=self.headers, timeout=10).json()['pins']
 					break
 				except requests.exceptions.RequestException as e:  # This is the correct syntax
+					print('timeout, start sleeping')
 					time.sleep(10)
 					continue
 					
 			code = self.incrementStr(code)
+			if pics == []:
+				# finish
+				break
 			for pic in pics:
 				if len(os.listdir(dirName)) >= 20:
 					print('already crawl {}, continue crawling !!!'.format(dirName))
@@ -56,6 +60,7 @@ class Command(BaseCommand):
 				filename = str(pic['file']['id'])+'.jpg'
 				pic_id = pic['file']['key']
 				if self.id_table.get(pic_id, 0) == 3:
+					print('repeated pic found !!!')
 					break
 				else:
 					self.id_table[pic_id] = self.id_table.setdefault(pic_id, 0) + 1
@@ -65,6 +70,7 @@ class Command(BaseCommand):
 						imgBinary = requests.get('http://img.hb.aicdn.com/' + pic_id, stream=True, timeout=10).content
 						break
 					except requests.exceptions.RequestException as e:  # This is the correct syntax
+						print('timeout, start sleeping')
 						time.sleep(10)
 						continue
 
