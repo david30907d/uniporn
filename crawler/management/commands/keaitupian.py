@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 import subprocess, requests, os, tqdm, time
 from bs4 import BeautifulSoup
 class Command(BaseCommand):
-	help = 'use this cmd to crawl hot girl pic from huaban !!!'
+	help = 'use this cmd to crawl hot girl pic from keaitupian pictures !!!'
 	domain = 'http://www.keaitupian.com'
 	start_urls = ['http://www.keaitupian.com/girl/list_1_1.html', 'http://www.keaitupian.com/meinv/qingchun/list_47_1.html']
 	def handle(self, *args, **options):
