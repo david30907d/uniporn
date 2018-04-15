@@ -6,7 +6,7 @@ from pyquery import PyQuery as pq
 
 class Command(BaseCommand):
 	help = 'Use this script to crawl hot pic from http://www.timliao.com'
-	domain = 'http://www.timliao.com/bbs'
+	domain = 'http://www.timliao.com/bbs/'
 	start_url = 'http://www.timliao.com/bbs/forumdisplay.php?fid=18&page='
 	def handle(self, *args, **options):
 		first_res = requests.get(self.start_url)
@@ -33,13 +33,16 @@ class Command(BaseCommand):
 				# start parsing this lady's page
 				print('start crawling inner page {}'.format(dir_name))
 				subprocess.call(['mkdir', dir_name])
-				inner_res = requests.get(lady_url)
-				res.encoding = res.apparent_encoding
-				inner_dom = pq(inner_res.text)
-				for index, img in enumerate(inner_dom('.imglimit')):
-					img_binary = requests.get(img.attr('src'), stream=True)
-					with open(os.join(dir_name, str(index)+'.jpg'), 'wb') as f:
-						f.write(img_binary)
 
+				inner_res = requests.get(lady_url)
+				inner_res.encoding = inner_res.apparent_encoding
+				inner_soup = pq(inner_res.text)
+				for index, img in enumerate(inner_soup('img.imglimit').items()):
+					if os.path.exists(os.path.join(dir_name, str(index)+'.jpg')):
+						print('already have {}, continue'.format(str(index)+'.jpg'))
+						continue
+					img_binary = requests.get(img.attr('src'), stream=True).content
+					with open(os.path.join(dir_name, str(index)+'.jpg'), 'wb') as f:
+						f.write(img_binary)
 
 		self.stdout.write(self.style.SUCCESS('finish crawling http://www.keaitupian.com !!!'))
