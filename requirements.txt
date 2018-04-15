@@ -2,3 +2,4 @@ Django==2.0.4
 requests
 tqdm
 bs4
+pyquery
