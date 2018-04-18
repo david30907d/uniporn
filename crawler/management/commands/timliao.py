@@ -37,12 +37,16 @@ class Command(BaseCommand):
 				inner_res = requests.get(lady_url)
 				inner_res.encoding = inner_res.apparent_encoding
 				inner_soup = pq(inner_res.text)
+				print('There\'s {} pictures in total'.format(len(list(inner_soup('img.imglimit').items()))))
 				for index, img in enumerate(inner_soup('img.imglimit').items()):
 					if os.path.exists(os.path.join(dir_name, str(index)+'.jpg')):
 						print('already have {}, continue'.format(str(index)+'.jpg'))
 						continue
-					img_binary = requests.get(img.attr('src'), stream=True).content
-					with open(os.path.join(dir_name, str(index)+'.jpg'), 'wb') as f:
-						f.write(img_binary)
 
-		self.stdout.write(self.style.SUCCESS('finish crawling http://www.keaitupian.com !!!'))
+					img_src = img.attr('src')
+					if '.jpg' in img_src:
+						img_binary = requests.get(img_src, stream=True).content
+						with open(os.path.join(dir_name, str(index)+'.jpg'), 'wb') as f:
+							f.write(img_binary)
+						print('got image {}.jpg'.format(str(index)))
+		self.stdout.write(self.style.SUCCESS('finish crawling http://www.timliao.com !!!'))
