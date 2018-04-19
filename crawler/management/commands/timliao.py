@@ -44,16 +44,17 @@ class Command(BaseCommand):
 						continue
 
 					img_src = img.attr('src')
-					if '.jpg' in img_src:
+					filename_extension = img_src.split('.')[-1]
+					if '.jpg' in filename_extension or '.png' in filename_extension:
 						try:
 							img_binary = requests.get(img_src, stream=True).content
 						except requests.ConnectionError as e:
 							print('Cannot save pic {}'.format(index))
 							continue
 						if index == 0:
-							file_name = dir_name+'.jpg'
+							file_name = dir_name + filename_extension
 						else:
-							file_name = str(index)+'.jpg'
+							file_name = str(index) + filename_extension
 						with open(os.path.join(dir_name, file_name), 'wb') as f:
 							f.write(img_binary)
 						print('got image {}'.format(file_name))
