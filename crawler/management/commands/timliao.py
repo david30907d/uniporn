@@ -13,7 +13,7 @@ class Command(BaseCommand):
 		first_dom = pq(first_res.text)
 		max_page = first_dom('.p_redirect+ .p_redirect')[0].attrib['href'].split('page=')[-1]
 		max_page = int(max_page)
-		for page_num in tqdm.tqdm(range(4, max_page+1)):
+		for page_num in tqdm.tqdm(range(1, max_page+1)):
 			# iterate through all pages
 			# and get DOM by requests and PyQuery
 			page_num = str(page_num)
@@ -44,7 +44,7 @@ class Command(BaseCommand):
 						continue
 
 					img_src = img.attr('src')
-					filename_extension = '.' + img_src.split('.')[-1]
+					filename_extension = '.' + img_src.split('.')[-1][:3]
 					if '.jpg' in filename_extension or '.png' in filename_extension:
 						try:
 							img_binary = requests.get(img_src, stream=True).content
