@@ -13,7 +13,7 @@ class Command(BaseCommand):
 		first_dom = pq(first_res.text)
 		max_page = first_dom('.p_redirect+ .p_redirect')[0].attrib['href'].split('page=')[-1]
 		max_page = int(max_page)
-		for page_num in tqdm.tqdm(range(1, max_page+1)):
+		for page_num in tqdm.tqdm(range(4, max_page+1)):
 			# iterate through all pages
 			# and get DOM by requests and PyQuery
 			page_num = str(page_num)
@@ -45,7 +45,12 @@ class Command(BaseCommand):
 
 					img_src = img.attr('src')
 					if '.jpg' in img_src:
-						img_binary = requests.get(img_src, stream=True).content
+						try:
+							img_binary = requests.get(img_src, stream=True).content
+						except requests.ConnectionError as e:
+							print('Cannot save pic {}'.format(index))
+							continue
+
 						with open(os.path.join(dir_name, str(index)+'.jpg'), 'wb') as f:
 							f.write(img_binary)
 						print('got image {}.jpg'.format(str(index)))
