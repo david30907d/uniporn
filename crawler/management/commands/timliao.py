@@ -50,8 +50,11 @@ class Command(BaseCommand):
 						except requests.ConnectionError as e:
 							print('Cannot save pic {}'.format(index))
 							continue
-
-						with open(os.path.join(dir_name, str(index)+'.jpg'), 'wb') as f:
+						if index == 0:
+							file_name = os.path.join(dir_name, dir_name+'.jpg')
+						else:
+							file_name = os.path.join(dir_name, str(index)+'.jpg')
+						with open(file_name, 'wb') as f:
 							f.write(img_binary)
 						print('got image {}.jpg'.format(str(index)))
 		self.stdout.write(self.style.SUCCESS('finish crawling http://www.timliao.com !!!'))
