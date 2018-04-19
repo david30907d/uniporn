@@ -51,10 +51,10 @@ class Command(BaseCommand):
 							print('Cannot save pic {}'.format(index))
 							continue
 						if index == 0:
-							file_name = os.path.join(dir_name, dir_name+'.jpg')
+							file_name = dir_name+'.jpg'
 						else:
-							file_name = os.path.join(dir_name, str(index)+'.jpg')
-						with open(file_name, 'wb') as f:
+							file_name = str(index)+'.jpg'
+						with open(os.path.join(dir_name, file_name), 'wb') as f:
 							f.write(img_binary)
-						print('got image {}.jpg'.format(str(index)))
+						print('got image {}'.format(file_name))
 		self.stdout.write(self.style.SUCCESS('finish crawling http://www.timliao.com !!!'))
