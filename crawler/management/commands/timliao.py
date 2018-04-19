@@ -44,7 +44,7 @@ class Command(BaseCommand):
 						continue
 
 					img_src = img.attr('src')
-					filename_extension = img_src.split('.')[-1]
+					filename_extension = '.' + img_src.split('.')[-1]
 					if '.jpg' in filename_extension or '.png' in filename_extension:
 						try:
 							img_binary = requests.get(img_src, stream=True).content
