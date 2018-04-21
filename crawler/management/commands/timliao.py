@@ -39,23 +39,23 @@ class Command(BaseCommand):
 				inner_soup = pq(inner_res.text)
 				print('There\'s {} pictures in total'.format(len(list(inner_soup('img.imglimit').items()))))
 				for index, img in enumerate(inner_soup('img.imglimit').items()):
-					if os.path.exists(os.path.join(dir_name, str(index)+'.jpg')):
-						print('already have {}, continue'.format(str(index)+'.jpg'))
-						continue
-
 					img_src = img.attr('src')
 					filename_extension = '.' + img_src.split('.')[-1][:3]
-					if '.jpg' in filename_extension or '.png' in filename_extension:
-						try:
-							img_binary = requests.get(img_src, stream=True).content
-						except requests.ConnectionError as e:
-							print('Cannot save pic {}'.format(index))
-							continue
-						if index == 0:
-							file_name = dir_name + filename_extension
-						else:
-							file_name = str(index) + filename_extension
-						with open(os.path.join(dir_name, file_name), 'wb') as f:
-							f.write(img_binary)
-						print('got image {}'.format(file_name))
+					if index == 0:
+						file_name = dir_name + filename_extension
+					else:
+						file_name = str(index) + filename_extension
+
+					if os.path.exists(os.path.join(dir_name, file_name)):
+						print('already have {}, continue'.format(file_name))
+						continue
+
+					try:
+						img_binary = requests.get(img_src, stream=True).content
+					except requests.ConnectionError as e:
+						print('Cannot save pic {}'.format(file_name))
+						continue
+					with open(os.path.join(dir_name, file_name), 'wb') as f:
+						f.write(img_binary)
+					print('got image {}'.format(file_name))
 		self.stdout.write(self.style.SUCCESS('finish crawling http://www.timliao.com !!!'))
