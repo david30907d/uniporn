@@ -31,7 +31,7 @@ class Command(BaseCommand):
 				lady_url, dir_name = self.domain + lady_href, lady.text()
 
 				# start parsing this lady's page
-				print('start crawling inner page {}'.format(dir_name))
+				print('start crawling page {}, inner page {}'.format(page_num, dir_name))
 				subprocess.call(['mkdir', dir_name])
 
 				inner_res = requests.get(lady_url)
