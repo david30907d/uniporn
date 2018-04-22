@@ -42,8 +42,8 @@ class Command(BaseCommand):
 				inner_res = requests.get(lady_url, verify=True)
 				inner_res.encoding = inner_res.apparent_encoding
 				inner_soup = pq(inner_res.text)
-				print('There\'s {} pictures in total'.format(len(list(inner_soup('.zoom').items()))))
-				for index, img in enumerate(inner_soup('.zoom').items()):
+				print('There\'s {} pictures in total'.format(len(list(inner_soup('.t_f .zoom').items()))))
+				for index, img in enumerate(inner_soup('.t_f .zoom').items()):
 					img_src = img.attr('file') if img.attr('file').startswith('http') else self.domain[:-1] + img.attr('file')
 					if not img_src: continue
 					# this filename extension is just guess
