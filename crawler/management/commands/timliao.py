@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand, CommandError
-import subprocess, requests, os, tqdm
+import subprocess, requests, os, tqdm, time
 from pyquery import PyQuery as pq
 from PIL import Image
 
@@ -82,6 +82,20 @@ class Command(BaseCommand):
 					except OSError as e:
 						print('Cannot save pic {}'.format(guess_filename))
 						continue
+					except requests.packages.urllib3.exceptions.ProtocolError as e:
+						for _ in range(3):
+							try:
+								img_binary = requests.get(img_src, stream=True)
+								img = Image.open(img_binary.raw)
+								# get correct filename extension with PIL function
+								filename_extension = '.' + img.format
+
+								correct_file_name = file_name_prefix + filename_extension
+								img.save(os.path.join(dir_name, correct_file_name))
+								print('got image {}'.format(correct_file_name))
+								break
+							except Exception as e:
+								time.sleep(3)
 
 				# save file done as a flag
 				with open(os.path.join(dir_name, 'done'), 'w') as f:

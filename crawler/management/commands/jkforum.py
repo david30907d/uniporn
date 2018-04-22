@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand, CommandError
-import requests, os, tqdm, re, pathlib
+import requests, os, tqdm, re, pathlib, time
 from pyquery import PyQuery as pq
 from PIL import Image
 
@@ -44,7 +44,7 @@ class Command(BaseCommand):
 				inner_soup = pq(inner_res.text)
 				print('There\'s {} pictures in total'.format(len(list(inner_soup('.zoom').items()))))
 				for index, img in enumerate(inner_soup('.zoom').items()):
-					img_src = img.attr('file')
+					img_src = img.attr('file') if img.attr('file').startswith('http') else self.domain[:-1] + img.attr('file')
 					if not img_src: continue
 					# this filename extension is just guess
 					# timliao web also has wrong filename extension on dom
