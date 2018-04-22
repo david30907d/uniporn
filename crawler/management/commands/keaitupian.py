@@ -5,6 +5,7 @@ class Command(BaseCommand):
 	help = 'use this cmd to crawl hot girl pic from keaitupian pictures !!!'
 	domain = 'http://www.keaitupian.com'
 	start_urls = ['http://www.keaitupian.com/girl/list_1_1.html', 'http://www.keaitupian.com/meinv/qingchun/list_47_1.html']
+	pic_type = 'nonporn_'
 	def handle(self, *args, **options):
 		for start_url in self.start_urls:
 			res = requests.get(start_url)
@@ -21,7 +22,7 @@ class Command(BaseCommand):
 				soup = BeautifulSoup(res.text)
 
 				for people in soup.select('#post'):
-					dirName = people.select('img')[0]['alt']
+					dirName = self.pic_type + people.select('img')[0]['alt']
 					print('Crawling page {} now'.format(dirName))
 					subprocess.call(['mkdir', dirName])
 					inner_url = self.domain + people.select('a')[0]['href']

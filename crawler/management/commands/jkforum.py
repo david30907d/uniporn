@@ -9,6 +9,7 @@ class Command(BaseCommand):
 	help = 'Use this script to crawl hot pic from https://www.jkforum.net'
 	domain = 'https://www.jkforum.net/'
 	start_url = 'https://www.jkforum.net/forum-234-'
+	pic_type = 'porn_'
 	def handle(self, *args, **options):
 		first_res = requests.get(self.start_url + '1.html')
 		first_dom = pq(first_res.text)
@@ -28,7 +29,7 @@ class Command(BaseCommand):
 
 				# get lady_url and dir_name
 				# dir_name is the title of the page.
-				lady_url, dir_name = self.domain + lady_href, lady.text()
+				lady_url, dir_name = self.domain + lady_href, self.pic_type + lady.text()
 
 				# start parsing this lady's page
 				print('start crawling page {}, inner page {}'.format(page_num, dir_name))
