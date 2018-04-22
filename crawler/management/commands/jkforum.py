@@ -27,13 +27,14 @@ class Command(BaseCommand):
 				lady_href = lady.attr('href')
 
 				# get lady_url and dir_name
+				# dir_name is the title of the page.
 				lady_url, dir_name = self.domain + lady_href, lady.text()
 
 				# start parsing this lady's page
 				print('start crawling page {}, inner page {}'.format(page_num, dir_name))
 
 				# python's version of mkdir
-				# which is portable
+				# which is portable to both windows and linux
 				pathlib.Path(dir_name).mkdir(parents=True, exist_ok=True) 
 				if os.path.exists(os.path.join(dir_name, 'done')):
 					print('already finish this page!!!')
@@ -42,12 +43,17 @@ class Command(BaseCommand):
 				inner_res = requests.get(lady_url, verify=True)
 				inner_res.encoding = inner_res.apparent_encoding
 				inner_soup = pq(inner_res.text)
-				print('There\'s {} pictures in total'.format(len(list(inner_soup('.t_f .zoom').items()))))
-				for index, img in enumerate(inner_soup('.t_f .zoom').items()):
+				print('There\'s {} pictures in total'.format(len(list(inner_soup('.t_f img').items()))))
+				for index, img in enumerate(inner_soup('.t_f img').items()):
+					# some ad picture come along with this css selector.
+					# so need to exclude them
+					if not img.attr('file'): continue
+
+					# some picture dom's src is lack of domain, needed to be add by myself.
 					img_src = img.attr('file') if img.attr('file').startswith('http') else self.domain[:-1] + img.attr('file')
-					if not img_src: continue
+
 					# this filename extension is just guess
-					# timliao web also has wrong filename extension on dom
+					# jkforum web also has wrong filename extension on dom
 					# so need to use PIL to check later...
 					guessed_filename_extension = '.' + img_src.split('.')[-1][:3].upper() 
 					if 'JPG' in guessed_filename_extension:
