@@ -29,7 +29,7 @@ class Command(BaseCommand):
 
 				# get lady_url and dir_name
 				# dir_name is the title of the page.
-				lady_url, dir_name = self.domain + lady_href, self.pic_type + lady.text()
+				lady_url, dir_name = self.domain + lady_href, self.pic_type + lady.text().replace('/', '')
 
 				# start parsing this lady's page
 				print('start crawling page {}, inner page {}'.format(page_num, dir_name))

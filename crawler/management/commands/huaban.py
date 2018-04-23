@@ -38,6 +38,7 @@ class Command(BaseCommand):
 	def handle(self, *args, **options):
 		for i in tqdm.tqdm(range(2, 150)):
 			dirName = self.pic_type + 'huaban'+str(i)
+			dirName = dirName.replace('/', '')
 			subprocess.call(['mkdir', dirName])
 			code = 'jfqv3nj8'
 

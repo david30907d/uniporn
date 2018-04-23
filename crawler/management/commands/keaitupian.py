@@ -23,6 +23,7 @@ class Command(BaseCommand):
 
 				for people in soup.select('#post'):
 					dirName = self.pic_type + people.select('img')[0]['alt']
+					dirName = dirName.replace('/', '')
 					print('Crawling page {} now'.format(dirName))
 					subprocess.call(['mkdir', dirName])
 					inner_url = self.domain + people.select('a')[0]['href']

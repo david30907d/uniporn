@@ -9,6 +9,8 @@ class Command(BaseCommand):
 	help = 'Use this script to crawl hot pic from http://www.timliao.com'
 	domain = 'http://www.timliao.com/bbs/'
 	start_url = 'http://www.timliao.com/bbs/forumdisplay.php?fid=18&page='
+	pic_type = 'hybrid_'
+
 	def handle(self, *args, **options):
 		first_res = requests.get(self.start_url)
 		first_dom = pq(first_res.text)
@@ -29,7 +31,7 @@ class Command(BaseCommand):
 				if not lady_href:continue
 
 				# get lady_url and dir_name
-				lady_url, dir_name = self.domain + lady_href, lady.text()
+				lady_url, dir_name = self.domain + lady_href, self.pic_type + lady.text().replace('/', '')
 
 				# start parsing this lady's page
 				print('start crawling page {}, inner page {}'.format(page_num, dir_name))
