@@ -4,7 +4,22 @@
 
 我要透過GAN去『想像』該人物裸體的照片
 
-# Training Data
+## Commands
+
+1. Install: `pip3 install -r requirements.txt`
+2. Crawler:
+    * nonporn pictures:
+        * `python3 manage.py huaban`
+        * `python3 manage.py keaitupian`
+    * porn pictures:
+        * `python3 manage.py jkforum`
+    * hybrid pictures:
+        * `python3 manage.py timliao`
+3. Compress in Training Data Sets:
+    * `python3 manage.py autotar <types of pics:nonporn, porn, hybrid>`
+
+
+## Training Data
 
 1. [清純女孩幾乎沒露的](http://huaban.com/explore/qingchunkeaimeinv/) [清純2](http://www.keaitupian.com/girl/) [清純3](https://www.pakutaso.com/person/woman/index_68.html)
 2. [有露的 提姆](http://www.timliao.com/bbs/forumdisplay.php?fid=18) [ptt表特](https://www.ptt.cc/bbs/Beauty/index.html)

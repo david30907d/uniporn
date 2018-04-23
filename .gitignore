@@ -1,6 +1,11 @@
 build/
 huaban*
 
+# pictures
+*.jpg
+*.JPEG
+*.PNG
+
 # Project stuff
 entrance/settings_database.py
 uwsgi.deploy.ini
