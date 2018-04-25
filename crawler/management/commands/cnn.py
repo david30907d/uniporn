@@ -1,12 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-try:
-	import cPickle as pickle
-	from urllib2 import urlopen
-except ImportError:
-	import pickle
-	from urllib.request import urlopen
-
+import pickle
+from urllib.request import urlopen
 import sys
 import os
 import random
@@ -88,8 +83,6 @@ def loadFeatures(files):
 			img = img[int(diff / 2): int(diff / 2) + w, :]
 		img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))
 		data[n] = img.ravel()
-		# cv2.imshow("res", img)
-		# cv2.waitKey(0)
 	return data
 
 
@@ -103,13 +96,13 @@ def denseToOneHot(labels_dense, num_classes):
 
 
 def loadDataset():
-	# try:
-	#     trainX, trainY, testX, testY = loadCache('nncache.bin')
-	# except:
-	trainX, trainY, testX, testY = loadFileLists()
-	trainX = loadFeatures(trainX)
-	testX = loadFeatures(testX)
-	# saveCache((trainX, trainY, testX, testY), 'nncache.bin')
+	try:
+	    trainX, trainY, testX, testY = loadCache('nncache.bin')
+	except:
+		trainX, trainY, testX, testY = loadFileLists()
+		trainX = loadFeatures(trainX)
+		testX = loadFeatures(testX)
+		saveCache((trainX, trainY, testX, testY), 'nncache.bin')
 	trainY = denseToOneHot(np.array(trainY), 2)
 	testY = denseToOneHot(np.array(testY), 2)
 	return trainX, trainY, testX, testY
@@ -267,13 +260,15 @@ class NNPCR(object):
 		logging.info('training')
 
 		for i in range(numIterations):
-			if i % 50 == 0:
-				en = batcher.getEpochNumber()
-				acc = self.__est.getAccuracy(testX, testY)
-				loss = self.__est.getLoss(testX, testY)
-				logging.info('epoch %d, iteration %d, accuracy %f, loss %f' % (en, i, acc, loss))
 			batch = batcher.nextBatch()
 			self.__est.train(batch[0], batch[1], keepProb=0.5)
+			if i % 50 == 0:
+				en = batcher.getEpochNumber()
+				val_acc = self.__est.getAccuracy(testX, testY)
+				val_loss = self.__est.getLoss(testX, testY)
+				acc = self.__est.getAccuracy(batch[0], batch[1])
+				loss = self.__est.getLoss(batch[0], batch[1])
+				logging.info('epoch %d, iteration %d, val_accuracy %f, val_loss %f, acc %f, loss %f' % (en, i, val_acc, val_loss, acc, loss))
 
 	def testAccuracy(self):
 		logging.info('loading dataset')
