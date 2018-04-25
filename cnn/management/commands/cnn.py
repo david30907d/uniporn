@@ -13,6 +13,10 @@ from tensorflow.python.ops import init_ops
 from tensorflow.contrib.losses.python.losses import loss_ops
 import logging
 
+# tensorboard flag
+tf.app.flags.DEFINE_string('tfdir', 'tensorboard', 'directory name of tensorboard') 
+FLAGS = tf.app.flags.FLAGS
+
 FILE_SEED = 42
 IMG_SIZE = 128
 
@@ -164,10 +168,10 @@ xavier = tf.contrib.layers.xavier_initializer
 class Estimator(object):
 
 	def __init__(self):
-		x = tf.placeholder(tf.float32, shape=[None, IMG_SIZE * IMG_SIZE * 3])
-		y_ = tf.placeholder(tf.float32, shape=[None, 2])
+		self.x = tf.placeholder(tf.float32, shape=[None, IMG_SIZE * IMG_SIZE * 3])
+		self.y_ = tf.placeholder(tf.float32, shape=[None, 2])
 
-		x_image = tf.reshape(x, [-1, IMG_SIZE, IMG_SIZE, 3])		# 128
+		x_image = tf.reshape(self.x, [-1, IMG_SIZE, IMG_SIZE, 3])		# 128
 
 		W_conv1 = tf.get_variable("W_conv1", shape=[3, 3, 3, 6], initializer=xavier())
 		b_conv1 = tf.get_variable('b_conv1', [1, 1, 1, 6])
@@ -195,8 +199,8 @@ class Estimator(object):
 		b_fc1 = tf.get_variable('b_fc1', [1024], initializer=init_ops.zeros_initializer)
 		h_fc1 = tf.nn.relu(tf.matmul(h_pool4_flat, W_fc1) + b_fc1)
 
-		keep_prob = tf.placeholder(tf.float32)
-		h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
+		self.keep_prob = tf.placeholder(tf.float32)
+		h_fc1_drop = tf.nn.dropout(h_fc1, self.keep_prob)
 
 		W_fcO = tf.get_variable("W_fcO", shape=[1024, 2], initializer=xavier())
 		b_fcO = tf.get_variable('b_fcO', [2], initializer=init_ops.zeros_initializer)
@@ -204,23 +208,22 @@ class Estimator(object):
 		logits = tf.matmul(h_fc1_drop, W_fcO) + b_fcO
 		y_conv = tf.nn.softmax(logits)
 
-		self.cross_entropy = loss_ops.softmax_cross_entropy(logits, y_)
+		self.cross_entropy = loss_ops.softmax_cross_entropy(logits, self.y_)
 
-		train_step = tf.train.AdagradOptimizer(0.01).minimize(self.cross_entropy)
+		self.train_step = tf.train.AdagradOptimizer(0.01).minimize(self.cross_entropy)
 
 		self.predictions = predictions = tf.argmax(y_conv, 1)
 
-		correct_prediction = tf.equal(predictions, tf.argmax(y_, 1))
-		accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+		correct_prediction = tf.equal(predictions, tf.argmax(self.y_, 1))
+		self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-		self.x = x
-		self.y_ = y_
-		self.keep_prob = keep_prob
-		self.trainStep = train_step
-		self.accuracy = accuracy
+		# for tensorboard
+		tf.summary.scalar('loss', self.cross_entropy) 
+		tf.summary.scalar('acc', self.accuracy) 
+		self.summary_op = tf.summary.merge_all()
 
 	def train(self, x, y, keepProb=1.0):
-		self.trainStep.run(feed_dict={ self.x: x, self.y_: y, self.keep_prob: keepProb})
+		self.train_step.run(feed_dict={ self.x: x, self.y_: y, self.keep_prob: keepProb})
 
 	def getLoss(self, x, y):
 		return self.cross_entropy.eval(feed_dict={
@@ -231,6 +234,13 @@ class Estimator(object):
 
 	def getAccuracy(self, x, y):
 		return self.accuracy.eval(feed_dict={
+			self.x: x,
+			self.y_: y,
+			self.keep_prob: 1.0,
+		})
+
+	def getSummary(self, x, y):
+		return self.summary_op.eval(feed_dict={
 			self.x: x,
 			self.y_: y,
 			self.keep_prob: 1.0,
@@ -249,6 +259,8 @@ class NNPCR(object):
 		tf.set_random_seed(FILE_SEED)
 		self.__sess = tf.InteractiveSession()
 		self.__est = Estimator()
+		self.val_summary_writer = tf.summary.FileWriter(FLAGS.tfdir + '/validation', graph=self.__sess.graph)
+		self.summary_writer = tf.summary.FileWriter(FLAGS.tfdir + '/training', graph=self.__sess.graph)
 
 	def train(self, numIterations=150000):
 		logging.info('loading dataset')
@@ -259,16 +271,27 @@ class NNPCR(object):
 
 		logging.info('training')
 
-		for i in range(numIterations):
+		for step in range(numIterations):
 			batch = batcher.nextBatch()
 			self.__est.train(batch[0], batch[1], keepProb=0.5)
-			if i % 50 == 0:
+
+			if step % 50 == 0:
 				en = batcher.getEpochNumber()
+
+				# val
 				val_acc = self.__est.getAccuracy(testX, testY)
 				val_loss = self.__est.getLoss(testX, testY)
+				val_summary = self.__est.getSummary(testX, testY)
+
+				# training
 				acc = self.__est.getAccuracy(batch[0], batch[1])
 				loss = self.__est.getLoss(batch[0], batch[1])
-				logging.info('epoch %d, iteration %d, val_accuracy %f, val_loss %f, acc %f, loss %f' % (en, i, val_acc, val_loss, acc, loss))
+				summary = self.__est.getSummary(batch[0], batch[1])
+				logging.info('epoch %d, iteration %d, val_accuracy %f, val_loss %f, acc %f, loss %f' % (en, step, val_acc, val_loss, acc, loss))
+
+				# for tensorboard
+				self.summary_writer.add_summary(summary, step)
+				self.val_summary_writer.add_summary(val_summary, step)
 
 	def testAccuracy(self):
 		logging.info('loading dataset')
