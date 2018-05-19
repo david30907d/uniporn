@@ -43,4 +43,5 @@ class Command(BaseCommand):
 
 		self.check_extension(options['pic_type'])
 		subprocess.call(['tar', 'zcvf', tar_name, options['pic_type']])
+		subprocess.Popen('rm -rf {}_*'.format(options['pic_type']), shell=True)
 		self.stdout.write(self.style.SUCCESS('compress {} finish !!!'.format(tar_name)))
