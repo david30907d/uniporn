@@ -7,7 +7,7 @@ class Command(BaseCommand):
 	ignore_folder = ['./.git', './.gitignore', './gan', './crawler', './README.md', './manage.py', './requirements.txt', './web', './venv', './uniporn']
 
 	def add_arguments(self, parser):
-	    parser.add_argument('pic_type', type=str)
+		parser.add_argument('pic_type', type=str)
 
 	@staticmethod
 	def check_extension(folder):
