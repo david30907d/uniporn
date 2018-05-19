@@ -13,10 +13,6 @@ from tensorflow.python.ops import init_ops
 from tensorflow.contrib.losses.python.losses import loss_ops
 import logging
 
-# tensorboard flag
-tf.app.flags.DEFINE_string('tfdir', 'tensorboard', 'directory name of tensorboard') 
-FLAGS = tf.app.flags.FLAGS
-
 FILE_SEED = 42
 IMG_SIZE = 128
 
@@ -259,8 +255,8 @@ class NNPCR(object):
 		tf.set_random_seed(FILE_SEED)
 		self.__sess = tf.InteractiveSession()
 		self.__est = Estimator()
-		self.val_summary_writer = tf.summary.FileWriter(FLAGS.tfdir + '/validation', graph=self.__sess.graph)
-		self.summary_writer = tf.summary.FileWriter(FLAGS.tfdir + '/training', graph=self.__sess.graph)
+		self.val_summary_writer = tf.summary.FileWriter('tensorboard' + '/validation', graph=self.__sess.graph)
+		self.summary_writer = tf.summary.FileWriter('tensorboard' + '/training', graph=self.__sess.graph)
 
 	def train(self, numIterations=150000):
 		logging.info('loading dataset')
