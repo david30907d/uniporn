@@ -40,8 +40,8 @@ def loadDir(dirName):
 def loadFileLists():
 	random.seed(FILE_SEED)
 
-	positiveFiles = sorted(loadDir('2'))
-	negativeFiles = sorted(loadDir('1'))
+	positiveFiles = sorted(loadDir('porn'))
+	negativeFiles = sorted(loadDir('nonporn'))
 
 	random.shuffle(positiveFiles)
 	random.shuffle(negativeFiles)
@@ -258,7 +258,7 @@ class NNPCR(object):
 		self.val_summary_writer = tf.summary.FileWriter('tensorboard' + '/validation', graph=self.__sess.graph)
 		self.summary_writer = tf.summary.FileWriter('tensorboard' + '/training', graph=self.__sess.graph)
 
-	def train(self, numIterations=150000):
+	def train(self, numIterations=600):
 		logging.info('loading dataset')
 		trainX, trainY, testX, testY = loadDataset()
 		batcher = Batcher(trainX, trainY, 128)

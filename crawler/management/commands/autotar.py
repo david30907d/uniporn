@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 import subprocess, os, tqdm, pathlib, shutil
+import numpy as np
 from PIL import Image
 
 class Command(BaseCommand):
@@ -29,13 +30,14 @@ class Command(BaseCommand):
 
 	def handle(self, *args, **options):
 		tar_name = options['pic_type']+'.tar.gz'
-		# remove the folder first
-		shutil.rmtree(options['pic_type'])
+		if os.path.isdir(options['pic_type']):
+			# remove the folder first
+			shutil.rmtree(options['pic_type'])
 		# create a folder for this kind of pics.
 		pathlib.Path(options['pic_type']).mkdir(parents=True, exist_ok=True)
 
 		for (dir_path, dir_names, file_names) in tqdm.tqdm(os.walk('.')):
-			if not dir_names and not {dir_path for ig in self.ignore_folder if ig in dir_path} and dir_path.startswith('./'+options['pic_type']):
+			if not dir_names and not {dir_path for ig in self.ignore_folder if ig in dir_path} and dir_path.startswith('./'+options['pic_type']) and dir_path != './'+options['pic_type']:
 				for file_name in file_names:
 					subprocess.call(['cp', os.path.join(dir_path, file_name), options['pic_type']])
 

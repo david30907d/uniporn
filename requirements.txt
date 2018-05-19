@@ -4,3 +4,5 @@ tqdm
 bs4
 pyquery
 pillow
+opencv-python
+tensorflow
