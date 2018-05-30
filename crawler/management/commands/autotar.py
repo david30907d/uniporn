@@ -39,7 +39,7 @@ class Command(BaseCommand):
 		for (dir_path, dir_names, file_names) in tqdm.tqdm(os.walk('.')):
 			if not dir_names and not {dir_path for ig in self.ignore_folder if ig in dir_path} and dir_path.startswith('./'+options['pic_type']) and dir_path != './'+options['pic_type']:
 				for file_name in file_names:
-					subprocess.call(['cp', os.path.join(dir_path, file_name), options['pic_type']])
+					subprocess.call(['cp', os.path.join(dir_path, file_name), os.path.join(options['pic_type'], dir_path+file_name)])
 
 		self.check_extension(options['pic_type'])
 		subprocess.call(['tar', 'zcvf', tar_name, options['pic_type']])
