@@ -24,7 +24,7 @@
 		2. `python3 manage.py cnn --train true`
 	* use a picture to do prediction: `python3 manage.py cnn --img <filepath of that pic>`
 	* use a url of pic to do prediction: `python3 manage.py cnn --url <url>`
-	* generate GAN training_data: `python3 manage.py genData --p2n < default = 1 => GAN[output:non, input:porn]>
+	* generate GAN training_data: `python3 manage.py genData --p2n < default = 1 => GAN[output:non, input:porn]>`
 4. GAN:
 	* `coming soon`
 	* <https://github.com/eriklindernoren/Keras-GAN>
