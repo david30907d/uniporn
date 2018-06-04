@@ -58,3 +58,15 @@
 
 1. 因為整體的訓練資料會很少，所以可能會需要用爬蟲到處亂爬，那這篇文章出現一張女生的圖，到底是再講林志玲還是小S（假設文章兩位女生的名子都出現），會需要一個演算法能精準自動上label給圖片，累積有穿衣服的input Data
 2. 也可以做三圍偵測器，AV女優基本都會給三維，把他當成regression的方法就訓練就行，因為三圍是連續值
+
+## 人工標記色情圖
+
+1. 執行 `python3 manage.py runserver`
+2. 把未標記照片放入 `static/labeling_package/images` 底下
+3. 在網址列輸入 `127.0.0.1:8000/labeling` 就可以開始標記了
+4. 標記好的圖片會移動至以下資料夾
+	* `static/labeling_package/Aporn` (色情圖片)
+	* `static/labeling_package/non-porn` (非色情圖片)
+	* `static/labeling_package/trash`  (只是個不能拿去訓練的垃圾)
+   
+<img src="https://i.imgur.com/VSblYwi.jpg" />
