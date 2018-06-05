@@ -83,5 +83,5 @@
 3. trash:
 	* 倒著
 	* ![倒著](gold_standard/NONPORN_standard/倒著.jpg)
-	* 包覆過多
+	* 包覆過多，臉部被遮住且雜物太多
 	* ![包覆_遮住臉](gold_standard/NONPORN_standard/包覆_遮住臉.jpg)
