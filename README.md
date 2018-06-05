@@ -70,3 +70,18 @@
 	* `static/labeling_package/trash`  (只是個不能拿去訓練的垃圾)
    
 <img src="https://i.imgur.com/VSblYwi.jpg" />
+
+1. porn:
+	* 肉色衣物
+	* ![肉色也PORN](gold_standard/PORN_standard/肉色也PORN.jpg)
+	* 正面照但姿勢不影響
+	* ![坐著也可以PORN](gold_standard/PORN_standard/坐著也可以PORN.jpg)
+2. nonporn:
+	* 包覆過多
+	* ![包覆面積](gold_standard/NONPORN_standard/包覆面積.jpg)
+	* ![包覆面積_2](gold_standard/NONPORN_standard/包覆面積_2.jpg)
+3. trash:
+	* 倒著
+	* ![倒著](gold_standard/NONPORN_standard/倒著.jpg)
+	* 包覆過多
+	* ![包覆_遮住臉](gold_standard/NONPORN_standard/包覆_遮住臉.jpg)
