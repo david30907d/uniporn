@@ -80,6 +80,7 @@
 	* 包覆過多
 	* ![包覆面積](gold_standard/NONPORN_standard/包覆面積.jpg)
 	* ![包覆面積_2](gold_standard/NONPORN_standard/包覆面積_2.jpg)
+	* ![包覆面積_2](gold_standard/NONPORN_standard/normal.jpg)
 3. trash:
 	* 倒著
 	* ![倒著](gold_standard/NONPORN_standard/倒著.jpg)
