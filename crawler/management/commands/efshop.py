@@ -16,9 +16,12 @@ class Command(BaseCommand):
 	# 11 : 上衣類 > 洋裝
 	# 208: 上衣類 > 襯衫
 	# 18 : 上衣類 > 外套
-	start_url = ['https://www.efshop.com.tw/category/352/1', 'https://www.efshop.com.tw/category/229/1', 
-				'https://www.efshop.com.tw/category/9/1', 'https://www.efshop.com.tw/category/13/1', 
-				'https://www.efshop.com.tw/category/11/1', 'https://www.efshop.com.tw/category/208/1', 
+	start_url = ['https://www.efshop.com.tw/category/352/1', 
+				'https://www.efshop.com.tw/category/229/1', 
+				'https://www.efshop.com.tw/category/9/1', 
+				'https://www.efshop.com.tw/category/13/1', 
+				'https://www.efshop.com.tw/category/11/1', 
+				'https://www.efshop.com.tw/category/208/1', 
 				'https://www.efshop.com.tw/category/18/1']
 	pic_type = 'suit_efshop'
 	pathlib.Path(pic_type).mkdir(parents=True, exist_ok=True)
