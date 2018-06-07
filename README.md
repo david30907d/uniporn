@@ -83,8 +83,8 @@
 	* 包覆過多，臉部被遮住且雜物太多
 	* ![包覆_遮住臉](gold_standard/PORN_standard/TRASH/包覆_遮住臉.jpg)
 	*包覆過多
-	* ![包覆面積](gold_standard/NONPORN_standard/包覆面積.jpg)
-	* ![包覆面積_2](gold_standard/NONPORN_standard/包覆面積_2.jpg)
+	* ![包覆面積](gold_standard/PORN_standard/PORN/包覆面積.jpg)
+	* ![包覆面積_2](gold_standard/PORN_standard/PORN/包覆面積_2.jpg)
 非色情類網站:
 1. nonporn:
 	* 正常照片
