@@ -42,21 +42,26 @@ def loadFileLists():
 
 	positiveFiles = sorted(loadDir('porn'))
 	negativeFiles = sorted(loadDir('nonporn'))
+	trashFiles = sorted(loadDir('trash'))
 
 	random.shuffle(positiveFiles)
 	random.shuffle(negativeFiles)
+	random.shuffle(trashFiles)
 
-	minLen = min(len(positiveFiles), len(negativeFiles))
+	minLen = min(len(positiveFiles), len(negativeFiles), len(trashFiles))
 
 	p20 = int(0.2 * minLen)
 
 	testPositive = positiveFiles[:p20]
 	testNegative = negativeFiles[:p20]
+	testTrash = trashFiles[:p20]
+
 	positiveFiles = positiveFiles[p20:]
 	negativeFiles = negativeFiles[p20:]
+	trashFiles = trashFiles[:p20]
 
-	trainSamples = [(f, 1) for f in positiveFiles] + [(f, 0) for f in negativeFiles]
-	testSamples = [(f, 1) for f in testPositive] + [(f, 0) for f in testNegative]
+	trainSamples = [(f, 2) for f in trashFiles] + [(f, 1) for f in positiveFiles] + [(f, 0) for f in negativeFiles]
+	testSamples = [(f, 2) for f in testTrash] + [(f, 1) for f in testPositive] + [(f, 0) for f in testNegative]
 
 	random.shuffle(trainSamples)
 	random.shuffle(testSamples)
@@ -97,8 +102,8 @@ def denseToOneHot(labels_dense, num_classes):
 
 def loadDataset():
 	try:
-	    trainX, trainY, testX, testY = loadCache('nncache.bin')
-	except:
+		trainX, trainY, testX, testY = loadCache('nncache.bin')
+	except: 
 		trainX, trainY, testX, testY = loadFileLists()
 		trainX = loadFeatures(trainX)
 		testX = loadFeatures(testX)
@@ -164,12 +169,12 @@ xavier = tf.contrib.layers.xavier_initializer
 class Estimator(object):
 
 	def __init__(self):
-		self.x = tf.placeholder(tf.float32, shape=[None, IMG_SIZE * IMG_SIZE * 3])
-		self.y_ = tf.placeholder(tf.float32, shape=[None, 2])
+		self.x = tf.placeholder(tf.float32, shape=[None,  * IMG_SIZE * 3])
+		self.y_ = tf.placeholder(tf.float32, shape=[None, 3])
 
-		x_image = tf.reshape(self.x, [-1, IMG_SIZE, IMG_SIZE, 3])		# 128
+		x_image = tf.reshape(self.x, [-1, IMG_SIZE, IMG_SIZE, 3])		# 256 * 256 * 3
 
-		W_conv1 = tf.get_variable("W_conv1", shape=[3, 3, 3, 6], initializer=xavier())
+		W_conv1 = tf.get_variable("W_conv1", shape=[3, 3, 3, 6], initializer=xavier())  #定義遮罩 (高度、寬度、通道數，遮罩數量)
 		b_conv1 = tf.get_variable('b_conv1', [1, 1, 1, 6])
 		h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)
 		h_pool1 = max_pool_2x2(h_conv1)								# 64
@@ -198,8 +203,8 @@ class Estimator(object):
 		self.keep_prob = tf.placeholder(tf.float32)
 		h_fc1_drop = tf.nn.dropout(h_fc1, self.keep_prob)
 
-		W_fcO = tf.get_variable("W_fcO", shape=[1024, 2], initializer=xavier())
-		b_fcO = tf.get_variable('b_fcO', [2], initializer=init_ops.zeros_initializer)
+		W_fcO = tf.get_variable("W_fcO", shape=[1024, 3], initializer=xavier())
+		b_fcO = tf.get_variable('b_fcO', [3], initializer=init_ops.zeros_initializer)
 
 		logits = tf.matmul(h_fc1_drop, W_fcO) + b_fcO
 		y_conv = tf.nn.softmax(logits)
