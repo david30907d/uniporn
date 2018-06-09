@@ -108,8 +108,8 @@ def loadDataset():
 		trainX = loadFeatures(trainX)
 		testX = loadFeatures(testX)
 		saveCache((trainX, trainY, testX, testY), 'nncache.bin')
-	trainY = denseToOneHot(np.array(trainY), 2)
-	testY = denseToOneHot(np.array(testY), 2)
+	trainY = denseToOneHot(np.array(trainY), 3)
+	testY = denseToOneHot(np.array(testY), 3)
 	return trainX, trainY, testX, testY
 
 
@@ -169,10 +169,10 @@ xavier = tf.contrib.layers.xavier_initializer
 class Estimator(object):
 
 	def __init__(self):
-		self.x = tf.placeholder(tf.float32, shape=[None,  * IMG_SIZE * 3])
+		self.x = tf.placeholder(tf.float32, shape=[None,  IMG_SIZE * IMG_SIZE  * 3])
 		self.y_ = tf.placeholder(tf.float32, shape=[None, 3])
 
-		x_image = tf.reshape(self.x, [-1, IMG_SIZE, IMG_SIZE, 3])		# 256 * 256 * 3
+		x_image = tf.reshape(self.x, [-1, IMG_SIZE, IMG_SIZE, 3])		# 128 * 128 * 3
 
 		W_conv1 = tf.get_variable("W_conv1", shape=[3, 3, 3, 6], initializer=xavier())  #定義遮罩 (高度、寬度、通道數，遮罩數量)
 		b_conv1 = tf.get_variable('b_conv1', [1, 1, 1, 6])
