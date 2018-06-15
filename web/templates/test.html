@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+	Broadcast by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Uniporn - model demo</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css'%}" />
+		<link rel="stylesheet" href="{% static 'assets/css/test.css'%}" />
+
+	</head>
+	<body class="subpage">
+
+		<!-- Header -->
+			<header id="header">
+				<h1><a href="#">Uniporn <span>by&nbsp;&nbsp;張泰瑋、翁湘雲、蔡秉宏、詹英鴻、將承陽、XXX、XXX</span></a></h1>
+				<a href="#menu">Menu</a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="/home">Home</a></li>
+					<li><a href="/home/demo_model">demo model</a></li>
+					<li><a href="elements.html">Elements</a></li>
+				</ul>
+			</nav>
+
+		<!-- Main -->
+			<div id="main">
+
+			<!-- One -->
+				<form action="upload.php" method="POST">
+					<input type="file" accept='image/*' onchange='openFile(event)' multiple>
+					<img id='output' width="960">
+					<p>Drag your files here or click in this area.</p>
+					<button type="submit">Upload</button>
+				</form>
+				
+			
+
+			</div>
+
+		
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/test.js'%}"></script>
+			<script src="{% static 'assets/js/jquery.min.js'%}"></script>
+			<script src="{% static 'assets/js/jquery.scrolly.min.js'%}"></script>
+			<script src="{% static 'assets/js/skel.min.js'%}"></script>
+			<script src="{% static 'assets/js/util.js'%}"></script>
+			<script src="{% static 'assets/js/main.js'%}"></script>
+
+	</body>
+</html>

@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+	Broadcast by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Uniporn - model demo</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css'%}" />
+		<link rel="stylesheet" href="{% static 'assets/css/upload.css'%}" />
+	</head>
+	<body class="subpage">
+
+		<!-- Header -->
+			<header id="header">
+				<h1><a href="#">Uniporn <span>by&nbsp;&nbsp;張泰瑋、翁湘雲、蔡秉宏、詹英鴻、江承陽、XXX、XXX</span></a></h1>
+				<a href="#menu">Menu</a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="/home">Home</a></li>
+					<li><a href="/home/demo_model">demo model</a></li>
+					<li><a href="elements.html">Elements</a></li>
+				</ul>
+			</nav>
+
+		<!-- Main -->
+			<div id="main">
+
+			<!-- Youtube video demo 的地方 -->
+				<section class="wrapper style1">
+					<div class="inner">
+						<header class="align-center">
+							<h2>Demo Video</h2>
+							<p>demo影片已經事先做好了<br>
+							先來看看demo影片再自己試試看吧</p>
+						</header>
+						<div class="video">
+							<div class="video-wrapper">
+								<iframe width="560" height="315" src="https://www.youtube.com/embed/s6zR2T9vn2c" frameborder="0" allowfullscreen></iframe>
+							</div>
+							<p class="caption">
+								(不要瞎掰好嗎)
+							</p>
+						</div>
+					</div>
+				</section>
+
+			<!-- 上傳自己的裸照 -->
+				<section class="wrapper " id="upload_porn">
+					<div class="inner">
+						<header class="align-center">
+							<h2>試試看上傳自己的全裸照吧</h2>
+							<p>一定要全裸！一定要全裸！一定要全裸！一定要全裸！一定要全裸！<br>
+							很重要！所以要說５次！</p>
+						</header>
+
+						<!-- 3 Column Video Section -->
+							<div class="flex flex-2">
+								<div class="video col">
+									<div class="image fit">
+										<img id='output' width="960">
+									</div>
+									<form action="" method="POST" enctype="multipart/form-data">
+										<input name="upload_file" type="file" accept='image/*' onchange='openFile(event)'>
+										<p>Drag your files here or click in this area.</p>
+										<button type="submit">Upload</button>
+									</form>
+								</div>
+								<div class="video col">
+									<div class="image fit">
+										{% if img_static_path == None or img_static_path == '' %}
+											<img src="{% static 'images/pic01.jpg' %}" alt="" />
+										{% else %}
+											<img src="{% static img_static_path %}" alt="" />
+										{% endif %}
+										<div class="arrow">
+											<div class="icon fa-play"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
+				</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<div class="flex flex-3">
+						<div class="col">
+							<h3>Vestibullum</h3>
+							<ul class="alt">
+								<li><a href="#">Nascetur nunc varius commodo.</a></li>
+								<li><a href="#">Vis id faucibus montes tempor</a></li>
+								<li><a href="#">Massa amet lobortis vel.</a></li>
+								<li><a href="#">Nascetur nunc varius commodo.</a></li>
+							</ul>
+						</div>
+						<div class="col">
+							<h3>Lobortis</h3>
+							<ul class="alt">
+								<li><a href="#">Nascetur nunc varius commodo.</a></li>
+								<li><a href="#">Vis id faucibus montes tempor</a></li>
+								<li><a href="#">Massa amet lobortis vel.</a></li>
+								<li><a href="#">Nascetur nunc varius commodo.</a></li>
+							</ul>
+						</div>
+						<div class="col">
+							<h3>Accumsan</h3>
+							<ul class="alt">
+								<li><a href="#">Nascetur nunc varius commodo.</a></li>
+								<li><a href="#">Vis id faucibus montes tempor</a></li>
+								<li><a href="#">Massa amet lobortis vel.</a></li>
+								<li><a href="#">Nascetur nunc varius commodo.</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="copyright">
+					<ul class="icons">
+						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon fa-snapchat"><span class="label">Snapchat</span></a></li>
+					</ul>
+					&copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com">Coverr</a>. Video: <a href="https://coverr.co">Coverr</a>.
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/upload.js'%}"></script>
+			<script src="{% static 'assets/js/jquery.min.js'%}"></script>
+			<script src="{% static 'assets/js/jquery.scrolly.min.js'%}"></script>
+			<script src="{% static 'assets/js/skel.min.js'%}"></script>
+			<script src="{% static 'assets/js/util.js'%}"></script>
+			<script src="{% static 'assets/js/main.js'%}"></script>
+
+	</body>
+</html>

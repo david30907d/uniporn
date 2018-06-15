@@ -16,8 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from labeling.views import *
+from web.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('labeling/',labeling),
+
+    path('home/',web_home),
+    path('home/demo_model',demo_model),
+    # path('home/demo_model',test_uploadFile),
+
 ]

@@ -26,7 +26,8 @@ def labeling(request):
 		get_imageName="labeling_package/images/"+str(i)
 		break
 
-
+	filenames = os.listdir(".") # "."可以找出目前位置
+	print(filenames) # 會回傳一個list
 	return render_to_response('index.html',locals())
 
 #判斷檔案是否為圖片
