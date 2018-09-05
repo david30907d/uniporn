@@ -22,3 +22,5 @@
 			1. [MTCNN](https://github.com/ipazc/mtcnn)
 			2. [MTCNN2](https://github.com/pangyupo/mxnet_mtcnn_face_detection)
 			3. [FaceNet](https://github.com/davidsandberg/facenet)
+		4. 疑似可以偵測戴口罩的人臉:
+			1. [mtcnn-anonymization](https://github.com/CyberAILab/MTCNN-tf-anonymization)
