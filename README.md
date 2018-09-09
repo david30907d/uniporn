@@ -24,3 +24,15 @@
 			3. [FaceNet](https://github.com/davidsandberg/facenet)
 		4. 疑似可以偵測戴口罩的人臉:
 			1. [mtcnn-anonymization](https://github.com/CyberAILab/MTCNN-tf-anonymization)
+
+## Business Model
+
+1. [主體是戀愛養成遊戲](https://www.youtube.com/watch?v=lr4iC910gWE)
+	1. 可以不用這麼多影片，用圖片跟表情就好
+	2. 然後用每週六日更新劇情的方式，讓大家一直上線
+2. 獲利：
+	1. 無，只是會丟一些女生的照片給user label，讓他選這是裙子還是牛仔褲之類的，答完就可以繼續玩
+3. 內容：
+	1. 劇情內容：請model來，然後用deepfake換臉，需要的話再請人工修圖，務必高畫質
+	2. 非劇情的劇照：像神魔一樣讓user每天登入抽女生卡，這些東西用比較低畫質的deepfake或是faceswap濫竽充數就好
+		1. 這類劇照可以選擇裙子、牛仔褲、浴衣等等不同款式，訓練資料其實就是user標好的
